@@ -1,20 +1,37 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import GithubApolloProvider from './GithubClient';
+import HomeScreen from './HomeScreen';
+import SearchScreen from './SearchBar';
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+	const [userName, setUserName] = useState('Arunshaik2001');
+
+	return (
+		<>
+			<StatusBar style='light' />
+			<SafeAreaView style={styles.container}>
+				<GithubApolloProvider>
+					<SearchScreen
+						name={userName}
+						onSearchChange={(text) => {
+							setUserName(text);
+						}}
+					/>
+					<HomeScreen userName={userName} />
+				</GithubApolloProvider>
+			</SafeAreaView>
+		</>
+	);
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+	container: {
+		flex: 1,
+		backgroundColor: '#673AB7',
+		justifyContent: 'flex-start',
+		paddingVertical: 50,
+		paddingHorizontal: 30,
+	},
 });
